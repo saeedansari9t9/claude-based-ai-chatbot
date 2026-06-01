@@ -57,7 +57,10 @@ function App() {
     abortControllerRef.current = new AbortController();
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      let apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      if (apiUrl.endsWith('/')) {
+        apiUrl = apiUrl.slice(0, -1);
+      }
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: {
