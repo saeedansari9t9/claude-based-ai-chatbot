@@ -16,13 +16,7 @@ const port = process.env.PORT || 5000;
 
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || origin.startsWith('http://localhost:')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true, // Allows all domains to connect
   credentials: true,
 }));
 
