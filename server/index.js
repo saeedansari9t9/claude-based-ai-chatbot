@@ -22,6 +22,10 @@ app.use(cors({
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Balosys AI Server is running perfectly! 🚀');
+});
+
 
 app.use(session({
   secret: 'super-secret-compliance-key-1234',
