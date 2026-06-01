@@ -16,7 +16,7 @@ const port = process.env.PORT || 5000;
 
 
 app.use(cors({
-  origin: true, // Allows all domains to connect
+  origin: process.env.CLIENT_URL,
   credentials: true,
 }));
 
@@ -27,14 +27,17 @@ app.get('/', (req, res) => {
 });
 
 
+app.set('trust proxy', 1);
+
 app.use(session({
-  secret: 'super-secret-compliance-key-1234',
+  secret: process.env.SESSION_SECRET || 'super-secret-compliance-key-1234',
   resave: false,
   saveUninitialized: true,
   cookie: { 
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 1000 * 60 * 60,
   }
 }));
 
