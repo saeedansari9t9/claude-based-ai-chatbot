@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-black antialiased font-sans bg-white;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+/* Typing cursor animation for streaming messages */
+.streaming-message > *:last-child::after {
+  content: ' ▍';
+  animation: blink 1s step-start infinite;
+  color: black;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300;
+}
+
+/* Markdown specific styling for MessageBubble */
+.prose p {
+  @apply mb-2 last:mb-0;
+}
+
+.prose strong {
+  @apply font-semibold;
+}
+
+.prose ul {
+  @apply list-disc pl-4 mb-2;
+}
+
+.prose ol {
+  @apply list-decimal pl-4 mb-2;
+}
+
+.prose li {
+  @apply mb-1;
+}
+
+/* Micro-animations */
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
