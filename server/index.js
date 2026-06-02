@@ -15,10 +15,20 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 
-const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : '*';
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  ...(process.env.CLIENT_URL ? [process.env.CLIENT_URL.replace(/\/$/, '')] : [])
+];
 
 app.use(cors({
-  origin: clientUrl,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
@@ -32,7 +42,7 @@ app.get('/', (req, res) => {
 app.set('trust proxy', 1);
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'super-secret-compliance-key-1234',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: { 
